@@ -36,8 +36,26 @@ grad = zeros(size(theta));
 %           grad = grad + YOUR_CODE_HERE (using the temp variable)
 %
 
+h = sigmoid(X * theta);
+val = (y' * log(h)) + ((1 .- y') * log(1 .- h));
+J = ((-1/m) * sum(val));
+
+% Here as well we shouldn't consider theta(0) which is theta(1) in octave since
+% octave starts from index 1.
+reg_term = ((lambda / (2 * m)) * sum(theta(2:end, :) .^ 2));
+
+J = J + reg_term;
 
 
+grad(1) = (1/m) * ((h' - y') * (X(:, 1)));
+
+
+% If you're just reading the code it's somewhat difficult to see why we had to take 
+% transpose of the regularized term but rest of the operations produce a 1xn matrix
+% and the rg term was initially nx1, to make addition possible we had to take a transpose
+% if you write down the results of each operation you'll see it what we actually want too.
+
+grad(2:end) = (1/m) .* ((h' - y') * (X(:, 2:end))) + (((lambda .* theta(2:end)) ./ m))';
 
 
 

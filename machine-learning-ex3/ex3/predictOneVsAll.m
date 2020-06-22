@@ -30,8 +30,15 @@ X = [ones(m, 1) X];
 %       for each row.
 %       
 
+% In this excercise corresponding thetas are available as row vectors whereas in earlier
+% exercises they were available as column vectors so we have to take a transpose.
+% I had to do it on paper to understand this.
+h = sigmoid(X * all_theta');
 
-
+% So max function returns the value and index of the largest element in every column.
+% but h is a 5000 x 10 vector we only need to take max among all the classes so take 
+% a transpose.
+[max_val, p] =  max(h');
 
 
 
